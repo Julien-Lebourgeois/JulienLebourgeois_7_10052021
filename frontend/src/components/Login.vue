@@ -17,7 +17,7 @@
             <button @click="connexion()" class="button" v-if="mode == 'login'">
                 <span>Connexion</span>
             </button>
-            <button class="button" v-else>
+            <button @click="createAccount()" class="button" v-else>
                 <span>Créer mon compte</span>
             </button>
         </div>
@@ -29,6 +29,8 @@
 
 <script>
 import axios from 'axios';
+import router from '../router/index';
+
 export default {
     name:'Login',
     data() {
@@ -36,7 +38,9 @@ export default {
             mode: 'login',
             email: '',
             username: '',
-            password: ''
+            password: '',
+            error: null,
+            success: false
         }
     },
     
@@ -48,16 +52,25 @@ export default {
             this.mode = 'login';
         },
         connexion: function () {
-            axios.get("http://localhost:3000/api/user/login", this.email, this.password)
-          .then(response => {
-             console.log(response);
+            const auth = { email: this.email, password: this.password};
+            axios.post('http://localhost:3000/api/user/login', auth)
+            .then((response) => {
+                // TEST : OK
+                console.log(response);
+                localStorage.setItem("user_token", response.data.token);
+                router.push({name: "Profile"});
             })
-          .catch(err => {
-              this.errors.push(err)
-          })
+            .catch((error) => console.log(error));
         },
         createAccount: function() {
-
+            const auth = { email: this.email, username: this.username, password: this.password};
+            axios.post('http://localhost:3000/api/user/signup', auth)
+            .then((response) => {
+                // TEST : OK
+                console.log(response);
+                router.push({name: "Confirmation"});
+            })
+            .catch((error) => console.log(error));
         }
     }
 }

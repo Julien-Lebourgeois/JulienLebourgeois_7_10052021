@@ -2,7 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-//const cors = require('cors');
+const cors = require('cors');
 const helmet = require('helmet');
 const app = express();
 
@@ -18,7 +18,7 @@ app.use(helmet());
 
 
 /* :::::::::::::: Manage requests through this URL :::::::::::::: */
-//app.use(cors({origin: 'http://localhost:8080'}));
+app.use(cors({origin: 'http://localhost:8080'}));
 
 
 /* :::::::::::::: Header to enter to the API and manage requests GET, POST etc... :::::::::::::: */

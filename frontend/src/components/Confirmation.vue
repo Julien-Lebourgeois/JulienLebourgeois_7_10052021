@@ -1,55 +1,42 @@
 <template>
-<div id="wrapper">
-    <div class="card">
-        <h1 class="card__title">Espace Perso</h1>
-        <h2> username</h2>
-        <p>email</p>
-        <div class="form-row">
-            <button class="button">
-                Déconnexion
-            </button>
+    <div id="wrapper">
+        <div class="card">
+            <h2>Votre compte a été créé avec succès</h2>
+            <p>Pour vous connecter, merci de vous rendre ici ! <router-link to="/connexion" id="link">connexion</router-link></p>
         </div>
     </div>
-</div>
 </template>
 
 <script>
-//import axios from 'axios'
-
 export default {
-    name: 'Profile',
-    data() {
-        return {
-            user: {}
-        }
-    },
-    computed: {
-         
-    },
-    methods: {
-
-    },
+    name: 'Confirmation'
 }
 </script>
 
 <style scoped>
-#wrapper{
+#wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     width: auto;
 }
+
 .card {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 300px;
-    height: 500px;
+    height: 200px;
     box-shadow: 10px 10px 50px black;
     border-radius: 2rem;
     padding: 1rem;
     background-color: whitesmoke;
+}
+
+#link {
+    text-decoration: none;
+    color: #fd4e00;
 }
 </style>

@@ -110,7 +110,7 @@ exports.getProfile = async (req, res) => {
           }
           var userId = decoded.userId;
           models.User.findOne({
-                attributes: [ 'id', 'email', 'username' ],
+                attributes: [ 'id', 'email', 'username', 'isAdmin' ],
                 where: { id: userId }
             }).then(function (user) {
             return res.status(200).json(user);

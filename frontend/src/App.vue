@@ -1,13 +1,48 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/connexion">Connexion</router-link> |
-      <router-link to="/myprofile">Profile</router-link> |
+      <router-link v-if="isLoggedIn" to="/">Home</router-link> |
+      <router-link v-if="isLoggedOut" to="/connexion">Connexion</router-link> |
+      <router-link v-if="isLoggedIn" to="/myprofile">Profile</router-link> 
+      <span v-if="isLoggedIn"> | <a id="logout" @click="logout()">Logout</a></span>
     </div>
     <router-view/>
   </div>
 </template>
+
+
+<script>
+export default {
+  computed: {
+    isLoggedIn: function(){
+      return this.$store.getters.isLoggedIn
+    },
+    isLoggedOut: function(){
+      return this.$store.getters.isLoggedOut
+    },
+  },
+  methods: {
+    logout: function() {
+      this.$store.dispatch('logout')
+      .then(() => {
+        this.$router.push('/connexion')
+      })
+    }
+  },
+// Check if the token is still available, if not logout is triggered
+  created: function () {
+    this.$http.interceptors.response.use(undefined, function (err) {
+      return new Promise(function () {
+        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+          this.$store.dispatch('logout')
+        }
+        throw err;
+      });
+    });
+  }
+}
+</script>
+
 
 <style lang="scss">
 #app {
@@ -21,14 +56,25 @@
   background-attachment: fixed;
   background-size: cover;
 }
-
-
 #nav {
-  padding: 30px;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    height: 30%;
+    box-shadow: 10px 10px 50px black;
+    padding: 1rem;
+    background-color: whitesmoke;
+    
+
+  #logout {
+    cursor: pointer;
+  }
 
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: #fd4e00;
 
     &.router-link-exact-active {
       color: #42b983;

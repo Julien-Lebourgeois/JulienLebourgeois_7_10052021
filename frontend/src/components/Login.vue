@@ -14,10 +14,10 @@
             <input v-model="password" class="form-row__input" type="password" placeholder="Mot de passe..."/>
         </div>
         <div class="form-row">
-            <button @click="connexion()" class="button" v-if="mode == 'login'">
+            <button @click="login()" class="button" v-if="mode == 'login'">
                 <span>Connexion</span>
             </button>
-            <button @click="createAccount()" class="button" v-else>
+            <button @click="register()" class="button" v-else>
                 <span>Créer mon compte</span>
             </button>
         </div>
@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import axios from 'axios';
-import router from '../router/index';
+//import axios from 'axios';
+//import router from '../router/index';
 
 export default {
     name:'Login',
@@ -51,26 +51,22 @@ export default {
         switchToLogin: function () {
             this.mode = 'login';
         },
-        connexion: function () {
-            const auth = { email: this.email, password: this.password};
-            axios.post('http://localhost:3000/api/user/login', auth)
-            .then((response) => {
-                // TEST : OK
-                console.log(response);
-                localStorage.setItem("user_token", response.data.token);
-                router.push({name: "Profile"});
-            })
-            .catch((error) => console.log(error));
+        login: function () {
+            let email = this.email
+            let password = this.password
+            this.$store.dispatch('login', {email, password})
+            .then(() => this.$router.push('/myprofile'))
+            .catch(err => console.log(err))
         },
-        createAccount: function() {
-            const auth = { email: this.email, username: this.username, password: this.password};
-            axios.post('http://localhost:3000/api/user/signup', auth)
-            .then((response) => {
-                // TEST : OK
-                console.log(response);
-                router.push({name: "Confirmation"});
-            })
-            .catch((error) => console.log(error));
+        register: function () {
+            let data = {
+                username: this.username,
+                email: this.email,
+                password: this.password
+            }
+            this.$store.dispatch('register', data)
+            .then(() => location.reload())
+            .catch(err => console.log(err))
         }
     }
 }

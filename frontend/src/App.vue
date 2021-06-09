@@ -1,10 +1,14 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link v-if="isLoggedIn" to="/">Home</router-link> |
-      <router-link v-if="isLoggedOut" to="/connexion">Connexion</router-link> |
-      <router-link v-if="isLoggedIn" to="/myprofile">Profile</router-link> 
-      <span v-if="isLoggedIn"> | <a id="logout" @click="logout()">Logout</a></span>
+      <img src="./Images/icon-left-font-monochrome-black.png" alt="logoGroupomania">
+      <div id="link">
+        <router-link v-if="isLoggedOut" to="/connexion">Connexion</router-link>
+        <router-link v-if="isLoggedIn" to="/">Home</router-link> 
+        <router-link v-if="isLoggedIn" to="/myprofile">Profile</router-link> 
+        <span v-if="isLoggedIn"> <a id="logout" @click="logout()">Logout</a></span>
+      </div>
+      
     </div>
     <router-view/>
   </div>
@@ -45,6 +49,10 @@ export default {
 
 
 <style lang="scss">
+body {
+  margin: 0px;
+  padding: 0px;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -57,28 +65,32 @@ export default {
   background-size: cover;
 }
 #nav {
-    padding: 30px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
-    height: 30%;
+    height: 100px;
+    padding: 0px 40px;
     box-shadow: 10px 10px 50px black;
-    padding: 1rem;
     background-color: whitesmoke;
-    
-
-  #logout {
-    cursor: pointer;
-  }
-
-  a {
-    font-weight: bold;
-    color: #fd4e00;
-
-    &.router-link-exact-active {
-      color: #42b983;
+    img {
+      width: 40%;
+      height: auto;
     }
-  }
+    #link {
+      display: flex;
+      justify-content: space-between;
+    }
+    #logout {
+      cursor: pointer;
+    }
+    a {
+      font-weight: bold;
+      color: #fd4e00;
+
+      &.router-link-exact-active {
+        color: #42b983;
+      }
+    }
 }
 </style>

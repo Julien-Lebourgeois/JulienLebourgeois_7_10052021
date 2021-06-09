@@ -4,6 +4,7 @@ import store from '../store/index'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Profile from '../views/Profile.vue'
+import Message from '../components/Message.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ const routes = [
     name: 'Profile',
     component: Profile
   },
+  {
+    path: '/postmessage',
+    name: 'Message',
+    component: Message
+  }
 ]
 
 const router = new VueRouter({

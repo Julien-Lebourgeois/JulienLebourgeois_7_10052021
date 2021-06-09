@@ -28,8 +28,6 @@
 </template>
 
 <script>
-//import axios from 'axios';
-//import router from '../router/index';
 
 export default {
     name:'Login',
@@ -55,7 +53,7 @@ export default {
             let email = this.email
             let password = this.password
             this.$store.dispatch('login', {email, password})
-            .then(() => this.$router.push('/myprofile'))
+            .then(() => this.$router.push('/'))
             .catch(err => console.log(err))
         },
         register: function () {

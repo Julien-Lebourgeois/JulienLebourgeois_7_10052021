@@ -4,8 +4,8 @@ import router from './router'
 import store from './store'
 import Axios from 'axios'
 
-
 Vue.config.productionTip = false;
+
 Vue.prototype.$http = Axios;
 const token = localStorage.getItem('token')
 if (token) {

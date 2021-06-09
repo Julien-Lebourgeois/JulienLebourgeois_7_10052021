@@ -92,16 +92,16 @@ export default new Vuex.Store({
     deleteAccount() {
       return new Promise((resolve, reject) => {
         const token = {headers: {authorization: localStorage.token}};
-        axios.delete('http://localhost:3000/api/user/delete', token)
+        axios.delete('http://localhost:3000/api/user/delete', token )
+        .then(response => {
+          console.log(response.data);
+        })
         resolve()
         .catch (err => {
           reject(err)
         })
       })
-      
-
-
-    }
+    },
   },
 
   modules: {

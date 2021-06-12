@@ -7,7 +7,7 @@ BACKEND :
 
 DATABASE :
 
-- Uyiliser le logiciel de votre choix pour se connecter à mysql (mamp, wamp, etc...)
+- Utiliser le logiciel de votre choix pour se connecter à un serveur mysql (mamp, wamp, etc...)
 - Toujours dans le dossier backend en utlisant le prompt lancer la commande "sequelize db:migrate"
 
 FRONTEND : 

@@ -18,10 +18,10 @@
                 <input 
                 id="attachment" 
                 type="file" 
+                ref="file"
                 name="attachment" 
-                accept="image/png, image/jpeg,
-                image/bmp, image/gif" 
-                @change="processFile($event)">
+                accept="image/*" 
+                @change="processFile()">
                 <button @click.prevent="postMessage()" type="submit">Poster</button>
             </form>
     </div>
@@ -36,7 +36,7 @@ export default {
         return {
             title: '',
             content: '',
-            attachment: '',
+            attachment: null,
             user: {
                 username: '',
                 email: '',
@@ -48,8 +48,9 @@ export default {
     },
 
     methods: {
-        processFile(event) {
-            this.attachment = event.target.files[0]
+        processFile() {
+            const file = this.$refs.file.files[0];
+            this.attachment = file;
         },
         
 
@@ -62,7 +63,7 @@ export default {
             console.log(data);
             const token = {headers: {authorization: localStorage.token}};
             axios.post('http://localhost:3000/api/message/add', data, token)
-            .then(() => this.$router.push('/'))
+            //.then(() => this.$router.push('/'))
             .catch(error => {
                 console.log(error);
             })

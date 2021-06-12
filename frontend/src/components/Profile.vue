@@ -4,6 +4,8 @@
         <img id="logo" src="../Images/icon-above-font.png" alt="Logo">
         <h1 class="card__title">Espace Perso</h1>
         <h2>{{user.username}}</h2>
+        <h4 v-if="user.isAdmin == 1">Administrateur</h4>
+        <h4 v-else>Utilisateur</h4>
         <p>{{user.email}}</p>
         <button @click="deleteAccount()" type="submit">Supprimer mon compte</button>
     </div>
@@ -19,7 +21,8 @@ export default {
         return {
             user: {
                 username: '',
-                email: ''
+                email: '',
+                isAdmin: ''
             }
         }
     },
@@ -39,6 +42,7 @@ export default {
             let userInfos = response.data
             this.user.username = userInfos.username;
             this.user.email = userInfos.email;
+            this.user.isAdmin = userInfos.isAdmin;
             console.log(userInfos);
         })
         .catch(error => {
@@ -64,7 +68,7 @@ export default {
     align-items: center;
     margin: 10px;
     width: 300px;
-    height: 450px;
+    height: 500px;
     box-shadow: 10px 10px 50px black;
     border-radius: 2rem;
     padding: 1rem;

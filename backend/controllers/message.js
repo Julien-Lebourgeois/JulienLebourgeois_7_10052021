@@ -14,7 +14,7 @@ exports.create = async (req, res) => {
         if (req.file) {
             var attachmentUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
         } else {
-            var attachmentUrl = null;
+            attachmentUrl = null;
         };
         
         var newPost = {

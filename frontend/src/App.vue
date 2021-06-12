@@ -1,10 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
-      <img src="./Images/icon-left-font-monochrome-black.png" alt="logoGroupomania">
+      <router-link v-if="isLoggedIn" to="/homepage"><img src="./Images/icon-left-font-monochrome-black.png" alt="logoGroupomania"></router-link> 
+      <router-link v-if="isLoggedOut" to="/"><img src="./Images/icon-left-font-monochrome-black.png" alt="logoGroupomania"></router-link> 
       <div id="link">
-        <router-link v-if="isLoggedOut" to="/connexion">Connexion</router-link>
-        <router-link v-if="isLoggedIn" to="/">Home</router-link> 
         <router-link v-if="isLoggedIn" to="/myprofile">Profile</router-link> 
         <span v-if="isLoggedIn"> <a id="logout" @click="logout()">Logout</a></span>
       </div>
@@ -29,20 +28,21 @@ export default {
     logout: function() {
       this.$store.dispatch('logout')
       .then(() => {
-        this.$router.push('/connexion')
+        this.$router.push('/')
       })
+    },
+    checkToken: function() {
+      const token = localStorage.getItem('token');
+      if (token) {
+        this.$router.push('/homepage')
+      }
+      else {
+        this.$router.push('/')
+      }
     }
   },
-// Check if the token is still available, if not logout is triggered
-  created: function () {
-    this.$http.interceptors.response.use(undefined, function (err) {
-      return new Promise(function () {
-        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
-          this.$store.dispatch('logout')
-        }
-        throw err;
-      });
-    });
+  mounted() {
+    this.checkToken();
   }
 }
 </script>
@@ -52,6 +52,7 @@ export default {
 body {
   margin: 0px;
   padding: 0px;
+
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -69,20 +70,18 @@ body {
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
+    width: 100%;
     height: 100px;
     padding: 0px 40px;
     box-shadow: 10px 10px 50px black;
     background-color: whitesmoke;
     img {
-      width: 40%;
+      width: 30%;
       height: auto;
-    }
-    #link {
-      display: flex;
-      justify-content: space-between;
     }
     #logout {
       cursor: pointer;
+      margin-left: 20px;
     }
     a {
       font-weight: bold;

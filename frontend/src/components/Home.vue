@@ -1,20 +1,17 @@
 <template>
-  <div id="wrapper">
-        <div class="card">
-            <h1>Fil d'actualité</h1>
-            <div id="link">
-                <router-link  to="/postmessage">Quelque chose à partager ?</router-link>
+  <div class="card">
+        <h1>Fil d'actualité</h1>
+        <div id="link">
+            <router-link  to="/postmessage">Quelque chose à partager ?</router-link>
+        </div>
+        <div v-for="message in messages" :key="message.id" id="fil">
+            <h2 id="title">{{ message.title }}</h2>
+            <span id="picture">{{ message.attachment }}</span>
+            <span id="description">{{ message.content}}</span>
+            <div>
+                <p>{{ message.User.username }} le {{ formatDate(message.createdAt) }}</p>
+                <i v-if="user.isAdmin == 1 || user.id == message.userId" @click="deleteMessage()" class="fas fa-trash"></i>
             </div>
-            <div v-for="message in messages" :key="message.messageId" id="fil">
-                <h2 id="title">{{ message.title }}</h2>
-                <span id="picture">{{ message.attachment }}</span>
-                <span id="description">{{ message.content}}</span>
-                <div>
-                    <p>{{ message.User.username }} le {{ formatDate(message.createdAt) }}</p>
-                    <i v-if="user.isAdmin == 1 || user.id == message.userId" @click="deleteMessage()" class="fas fa-trash"></i>
-                </div>
-            </div>
-            
         </div>
     </div>
 </template>
@@ -39,7 +36,7 @@ export default {
     methods: {
         getAllMessages: function() {
             const token = {headers: {authorization: localStorage.token}};
-            axios.get('http://localhost:3000/api/message/messages', token)
+            axios.get('http://localhost:3000/api/message/messages?page=1', token)
             .then(response => {
                 this.messages = response.data.messages;
                 console.log(response.data.messages);
@@ -92,13 +89,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-#wrapper{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: auto;
-}
+
 #link {
     width: 50%;
     background: linear-gradient(0deg, rgba(253,78,0,1) 22%, rgba(255,106,0,1) 100%);
@@ -122,14 +113,14 @@ export default {
 .card {
     display: flex;
     flex-direction: column;
-    justify-content: top;
+    justify-content: center;
     align-items: center;
-    margin: 10px;
-    width: 70%;
-    height: 90%;
+    margin-top: 5%;
+    margin-left: 20%;
+    margin-right: 20%;
+    padding: 1% 0%;
     box-shadow: 10px 10px 50px black;
     border-radius: 2rem;
-    padding: 1rem;
     background-color: whitesmoke;
     #fil {
         display: flex;

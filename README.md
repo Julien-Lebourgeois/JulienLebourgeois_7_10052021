@@ -12,5 +12,5 @@ DATABASE :
 
 FRONTEND : 
 
-- Se rendre dans le fichier "backend" via le prompt et lancer la commande "npm install"
+- Se rendre dans le fichier "frontend" via le prompt et lancer la commande "npm install"
 - Ensuite lancer la commande "npm run serve" et se rendre sur l'adresse localhost indiquée.
